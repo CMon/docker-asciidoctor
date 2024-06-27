@@ -95,6 +95,7 @@ ARG kramdown_asciidoc_version=2.1.0
 ARG asciidoctor_bibtex_version=0.9.0
 ARG asciidoctor_kroki_version=0.10.0
 ARG asciidoctor_reducer_version=1.0.2
+ARG asciidoctor_chart=1.0.0
 
 ENV ASCIIDOCTOR_CONFLUENCE_VERSION=${asciidoctor_confluence_version} \
   ASCIIDOCTOR_DIAGRAM_VERSION=${asciidoctor_diagram_version} \
@@ -105,7 +106,8 @@ ENV ASCIIDOCTOR_CONFLUENCE_VERSION=${asciidoctor_confluence_version} \
   KRAMDOWN_ASCIIDOC_VERSION=${kramdown_asciidoc_version} \
   ASCIIDOCTOR_BIBTEX_VERSION=${asciidoctor_bibtex_version} \
   ASCIIDOCTOR_KROKI_VERSION=${asciidoctor_kroki_version} \
-  ASCIIDOCTOR_REDUCER_VERSION=${asciidoctor_reducer_version}
+  ASCIIDOCTOR_REDUCER_VERSION=${asciidoctor_reducer_version} \
+  ASCIIDOCTOR_CHART=${asciidoctor_chart}
 
 ## Always use the latest dependencies versions available for the current Alpine distribution
 # hadolint ignore=DL3018,DL3028
@@ -134,6 +136,7 @@ RUN apk add --no-cache --virtual .rubymakedepends \
   "asciidoctor-bibtex:${ASCIIDOCTOR_BIBTEX_VERSION}" \
   "asciidoctor-kroki:${ASCIIDOCTOR_KROKI_VERSION}" \
   "asciidoctor-reducer:${ASCIIDOCTOR_REDUCER_VERSION}" \
+  "asciidoctor-chart:${ASCIIDOCTOR_CHART}" \
   && apk del -r --no-cache .rubymakedepends \
   # Fixes an issue with 2 nokogiri versions breaking asciidoctor-epub3 on arm64
   && if [[ ${TARGETARCH} == arm64 ]]; then gem uninstall nokogiri -v '1.16.0'; fi
